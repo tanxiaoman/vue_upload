@@ -52,7 +52,7 @@ export default {
         // 校验图片大小
         const isLt2M = fileList[0].size / 1024 / 1024 < 5
         if (!isLt2M) {
-          this.$message.warning('上传头像图片大小不能超过5M！')
+          this.$message.warning('上传的图片大小不能超过5M！')
           return
         }
         // 将图片转化为base64的字符串  FileReader
