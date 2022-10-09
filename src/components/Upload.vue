@@ -37,7 +37,8 @@ export default {
       uploadUrl: '/upload',
       avatar: '',
       dialogVisible: false,
-      result: ''
+      result: '',
+      fileName:''
     }
   },
   methods: {
@@ -47,6 +48,7 @@ export default {
       if (fileList.length > 0) {
         // 选择了图片
         console.log(fileList[0])
+        this.fileName = fileList[0].name
         // 校验图片大小
         const isLt2M = fileList[0].size / 1024 / 1024 < 5
         if (!isLt2M) {
@@ -74,6 +76,7 @@ export default {
       }
       let param = new FormData(); //创建form对象
       param.append('image', this.avatar);//通过append向form对象添加数据
+      param.append('fileName', this.fileName);
       this.$http.post(this.uploadUrl, param).then(response => {
         if(response.data){
           this.result = response.data
