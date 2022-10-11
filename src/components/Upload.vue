@@ -26,6 +26,10 @@
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
+
+    拓展链接：<a target="_blank" href="http://www.manchu.work/home" class="text-decoration-none">
+      manchu.work
+    </a>
   </div>
 
 </template>
@@ -38,7 +42,7 @@ export default {
       avatar: '',
       dialogVisible: false,
       result: '',
-      fileName:''
+      fileName: ''
     }
   },
   methods: {
@@ -78,7 +82,7 @@ export default {
       param.append('image', this.avatar);//通过append向form对象添加数据
       param.append('fileName', this.fileName);
       this.$http.post(this.uploadUrl, param).then(response => {
-        if(response.data){
+        if (response.data) {
           this.result = response.data
         }
         this.dialogVisible = true
@@ -104,7 +108,7 @@ export default {
 }
 
 .preview {
-  object-fit: cover;
+  object-fit: contain;
   width: 350px;
   height: 350px;
 }
