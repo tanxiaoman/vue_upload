@@ -1,39 +1,35 @@
 <template>
-  <div>
-    <el-card class="box-card">
-      <div>
-        <h1 style="color: royalblue">满文识别系统</h1>
-        <img :src="avatar" alt="" class="preview" v-if="avatar" />
-        <!-- 图片，用来展示用户选择的图片 -->
-        <img src="" alt="" class="preview" v-else />
-
-        <!-- 按钮区域 -->
-        <div class="btn-box">
-          <!-- 增加文件选择框 -->
+  <div style="width: 90%; margin: 0 auto;">
+    <nav id="nav">满文识别系统</nav>
+    <el-row id="content">
+      <el-col :span="8" :xs="24" :sm="24" :md="8" class="leftPart">
+        <el-row class="leftPart-button">
           <input type="file" accept="image/*" style="display: none" ref="iptFile" @change="onChangeFile" />
-          <el-button type="primary" icon="el-icon-plus" @click="$refs.iptFile.click()">
-            选择图片</el-button>
-          <el-button type="primary" icon="el-icon-upload" @click="upload">
-            上传图片</el-button>
-        </div>
-      </div>
-    </el-card>
-
-    <el-dialog title="满文识别结果" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
-      <span style="color: blue">{{result}}</span>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-      </span>
-    </el-dialog>
-
-    拓展链接：<a target="_blank" href="http://www.manchu.work/home" class="text-decoration-none">
-      manchu.work
-    </a>
+          <el-col :span="10" :offset="1">
+            <el-button type="primary" class="button" @click="$refs.iptFile.click()"><i
+                class="el-icon-plus el-icon--right" style="margin-right: 5px;"></i>选择图片</el-button>
+          </el-col>
+          <el-col :span="10" :offset="2">
+            <el-button type="primary" class="button" @click="upload"><i class="el-icon-upload el-icon--right"
+                style="margin-right: 5px;"></i>上传图片</el-button>
+          </el-col>
+        </el-row>
+      </el-col>
+      <el-col :span="16" :xs="24" :sm="24" :md="16" class="rightPart">
+        <el-image :src="src" style="width: 100%; height:100%;">
+          <div slot="placeholder" class="image-slot">
+            <el-image :src="src"></el-image>
+          </div>
+        </el-image>
+      </el-col>
+    </el-row>
+    <footer id="footer">
+      拓展链接：<a target="_blank" href="http://www.manchu.work/home">manchu.work</a>
+    </footer>
   </div>
-
 </template>
 <script>
+import manchuImage from "../assets/images/manchu.jpg";
 export default {
   name: 'UserAvatar',
   data() {
@@ -42,7 +38,8 @@ export default {
       avatar: '',
       dialogVisible: false,
       result: '',
-      fileName: ''
+      fileName: '',
+      src: manchuImage
     }
   },
   methods: {
@@ -102,10 +99,43 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
-.btn-box {
-  margin-top: 10px;
+<style lang="scss" scoped>
+#nav {
+  height: 60px;
+  background-color: #93B874;
+  font-family: cursive, Tahoma, Geneva, Verdana, sans-serif;
+  font-size: xx-large;
+  font-weight: bold;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 10px;
 }
+
+#content {
+  background-color: grey;
+}
+
+#footer {
+  height: 30px;
+  background-color: #93B874;
+  text-align: end;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.leftPart {}
+
+.leftPart-button {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.rightPart {
+  height: 100%;
+}
+
+.btn-box {}
 
 .preview {
   object-fit: contain;

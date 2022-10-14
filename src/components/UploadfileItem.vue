@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class='delBtn' v-if='showDel' @click='cancelHanlder(file)'>
-                    <img src="@/assets/public/avatar.jpg" alt="">
+                    <img src="@/assets/public/manchu.jpg" alt="">
                 </div>
             </div>
         </div>
@@ -52,16 +52,16 @@ export default {
                   *示例"xls": require('@/assets/image/xls.png'),
                   xis的文件所需要加载的路径是；assets文件下的image文件夹下的xls.png
               */
-                "rar": require('@/assets/images/avatar.jpg'),
-                "zip": require('@/assets/images/avatar.jpg'),
-                "pdf": require('@/assets/images/avatar.jpg'),
-                "jpg": require('@/assets/images/avatar.jpg'),
-                "jpeg": require('@/assets/images/avatar.jpg'),
-                "png": require('@/assets/images/avatar.jpg'),
-                "doc": require('@/assets/images/avatar.jpg'),
-                "docx": require('@/assets/images/avatar.jpg'),
-                "txt": require('@/assets/images/avatar.jpg'),
-                "xls": require('@/assets/images/avatar.jpg'),
+                "rar": require('@/assets/images/manchu.jpg'),
+                "zip": require('@/assets/images/manchu.jpg'),
+                "pdf": require('@/assets/images/manchu.jpg'),
+                "jpg": require('@/assets/images/manchu.jpg'),
+                "jpeg": require('@/assets/images/manchu.jpg'),
+                "png": require('@/assets/images/manchu.jpg'),
+                "doc": require('@/assets/images/manchu.jpg'),
+                "docx": require('@/assets/images/manchu.jpg'),
+                "txt": require('@/assets/images/manchu.jpg'),
+                "xls": require('@/assets/images/manchu.jpg'),
             }
         }
     },
