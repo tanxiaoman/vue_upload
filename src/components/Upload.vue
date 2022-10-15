@@ -37,7 +37,7 @@ export default {
       avatar: require("@/assets/images/manchu.png"),
       dialogVisible: false,
       result: '',
-      fileName: '',
+      fileName: 'manchu.png',
     }
   },
   methods: {
@@ -69,7 +69,7 @@ export default {
     },
     upload() {
       //let file = this.$refs.iptFile.files[0]
-      if (this.avatar === '') {
+      if (this.avatar === '' || this.fileName === 'manchu.png') {
         this.$message.warning('请选择图片后再上传！')
         return
       }
