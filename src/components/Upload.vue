@@ -1,22 +1,22 @@
 <template>
-  <div style="width: 90%; margin: 0 auto;">
+  <div style="width: 90%; margin: 0 auto; border: 2px solid #2c3e50;">
     <nav id="nav">满文识别系统</nav>
     <el-row id="content">
       <el-col :span="8" :xs="24" :sm="24" :md="8" class="leftPart">
-        <el-row class="leftPart-button">
+        <el-row type="flex" justify="center" class="leftPart-button">
           <input type="file" accept="image/*" style="display: none" ref="iptFile" @change="onChangeFile" />
-          <el-col :span="10" :offset="1">
+          <el-col :span="10">
             <el-button type="primary" class="button" @click="$refs.iptFile.click()"><i
                 class="el-icon-plus el-icon--right" style="margin-right: 5px;"></i>选择图片</el-button>
           </el-col>
-          <el-col :span="10" :offset="2">
+          <el-col :span="10">
             <el-button type="primary" class="button" @click="upload"><i class="el-icon-upload el-icon--right"
                 style="margin-right: 5px;"></i>上传图片</el-button>
           </el-col>
         </el-row>
       </el-col>
       <el-col :span="16" :xs="24" :sm="24" :md="16" class="rightPart">
-        <el-image :src="src" style="width: 100%; height:100%;">
+        <el-image :src="avatar" fit="scale-down" style="height:100%;">
           <div slot="placeholder" class="image-slot">
             <el-image :src="src"></el-image>
           </div>
@@ -29,17 +29,15 @@
   </div>
 </template>
 <script>
-import manchuImage from "../assets/images/manchu.jpg";
 export default {
   name: 'UserAvatar',
   data() {
     return {
       uploadUrl: '/upload',
-      avatar: '',
+      avatar: require("@/assets/images/manchu.png"),
       dialogVisible: false,
       result: '',
       fileName: '',
-      src: manchuImage
     }
   },
   methods: {
@@ -75,17 +73,66 @@ export default {
         this.$message.warning('请选择图片后再上传！')
         return
       }
-      let param = new FormData(); //创建form对象
-      param.append('image', this.avatar);//通过append向form对象添加数据
-      param.append('fileName', this.fileName);
-      this.$http.post(this.uploadUrl, param).then(response => {
-        if (response.data) {
-          this.result = response.data
+      this.handleRotate(this.avatar).then(handleFile => {
+        let param = new FormData(); //创建form对象
+        param.append('image', handleFile);//通过append向form对象添加数据
+        param.append('fileName', this.fileName);
+        this.$http.post(this.uploadUrl, param).then(response => {
+          if (response.data) {
+            this.result = response.data
+          }
+          this.dialogVisible = true
+          console.log('上传成功');
+
+          //  返回结果传递 
+          this.$router.push({
+            path: '/success',
+            query: {
+              isSuccess: true,
+              result: this.result,
+            }
+          })
+        }).catch(function (error) {
+          console.log(error);
+          //  返回结果传递 
+          this.$router.push({
+            path: '/success',
+            query: {
+              isSuccess: false,
+              result: ""
+            }
+          })
+        })
+      });
+    },
+    handleRotate(file) {
+      return new Promise((resolve, reject) => {
+        const that = this;
+        const img = new Image();
+        img.src = file;
+        img.onload = function () {
+          const canvas = document.createElement('canvas')
+          const ctx = canvas.getContext('2d')
+          canvas.width = img.height
+          canvas.height = img.width
+          ctx.translate(canvas.width / 2, canvas.height / 2)
+          ctx.rotate((270 * Math.PI) / 180)
+          ctx.drawImage(img, -canvas.height / 2, -canvas.width / 2)
+          const ndata = canvas.toDataURL('image/jpeg', 1.0)
+          resolve(ndata)
         }
-        this.dialogVisible = true
-        console.log('上传成功')
-      }).catch(function (error) {
-        console.log(error)
+      })
+    },
+    dataURLtoFile(dataurl) {
+      var arr = dataurl.split(',')
+      var bstr = atob(arr[1])
+      var n = bstr.length
+      var u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      return new File([u8arr], 'image', {
+        type: 'image'
       })
     },
     handleClose(done) {
@@ -113,7 +160,7 @@ export default {
 }
 
 #content {
-  background-color: grey;
+  background-color: white;
 }
 
 #footer {
@@ -124,22 +171,20 @@ export default {
   padding-top: 10px;
 }
 
-.leftPart {}
-
 .leftPart-button {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-.rightPart {
-  height: 100%;
+@media screen and (min-width: 1024px) {
+  #content {
+    display: flex;
+    align-items: center
+  }
 }
 
-.btn-box {}
-
-.preview {
-  object-fit: contain;
-  width: 350px;
-  height: 350px;
+.rightPart {
+  height: 600px;
+  background-color: rgb(245, 245, 245)
 }
 </style>
