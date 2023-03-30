@@ -38,10 +38,10 @@ export default {
   data() {
     return {
       uploadUrl: '/upload',
-      avatar: require("@/assets/images/manchu.png"),
+      avatar: require("@/assets/images/manchu_culture.png"),
       dialogVisible: false,
       result: '',
-      fileName: 'manchu.png',
+      fileName: 'manchu_culture.png',
     }
   },
   methods: {
@@ -73,7 +73,7 @@ export default {
     },
     upload(isPrinted) {
       //let file = this.$refs.iptFile.files[0]
-      if (this.avatar === '' || this.fileName === 'manchu.png') {
+      if (this.avatar === '' || this.fileName === 'manchu_culture.png') {
         this.$message.warning('请选择图片后再上传！')
         return
       }
@@ -95,6 +95,8 @@ export default {
             query: {
               isSuccess: true,
               result: this.result,
+              handleFile: this.avatar,
+              filename: this.fileName
             }
           })
         }).catch(function (error) {
