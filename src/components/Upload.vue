@@ -94,6 +94,7 @@ export default {
           }
           this.dialogVisible = true
           console.log('上传成功');
+          
 
           //  返回结果传递 
           this.$router.push({
